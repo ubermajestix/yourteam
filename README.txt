@@ -1,32 +1,31 @@
 yourteam
-    by FIXME (your name)
-    FIXME (url)
+    by Tyler
+    at http://...
 
 == DESCRIPTION:
 
-FIXME (describe your package)
+for use with yourte.am app
 
 == FEATURES/PROBLEMS:
 
-* FIXME (list of features or problems)
 
 == SYNOPSIS:
 
-  FIXME (code sample of usage)
 
 == REQUIREMENTS:
 
-* FIXME (list of requirements)
+Datamapper
+Logging
 
 == INSTALL:
 
-* FIXME (sudo gem install, anything else)
+sudo gem install
 
 == LICENSE:
 
 (The MIT License)
 
-Copyright (c) 2008 FIXME (different license?)
+Copyright (c) 2008 Tyler Montgomery
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

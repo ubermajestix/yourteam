@@ -19,10 +19,10 @@ require 'yourteam'
 task :default => 'spec:run'
 
 PROJ.name = 'yourteam'
-PROJ.authors = 'FIXME (who is writing this software)'
-PROJ.email = 'FIXME (your e-mail)'
-PROJ.url = 'FIXME (project homepage)'
-PROJ.version = Yourteam::VERSION
+PROJ.authors = 'Tyler Montgomery'
+PROJ.email = 'tyler@is.stupidawesome.com'
+PROJ.url = 'http://...'
+PROJ.version = YourTeam::VERSION
 PROJ.rubyforge.name = 'yourteam'
 
 PROJ.spec.opts << '--color'
