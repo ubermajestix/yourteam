@@ -1,8 +1,10 @@
 class YourTeam::User
   include DataMapper::Resource
   property :id, Serial
-  # property :first, String
-  # property :last, String
+  property :name, String
+  property :location, String
+  property :profile_image_url, String
+  property :twitter_id, String
   property :username, String #twitter @username
   has 1, :team, :model => "YourTeam::Team"
   has n, :members, :through => :team

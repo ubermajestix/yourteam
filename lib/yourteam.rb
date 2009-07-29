@@ -2,6 +2,9 @@ require 'rubygems'
 # sudo gem install dm-core do_sqlite3 --source http://gems.datamapper.org -v 0.10.0
 require 'dm-core'
 require 'logging'
+require 'json/ext'
+require 'curb'
+
 
 module YourTeam
   # :stopdoc:
@@ -12,21 +15,18 @@ module YourTeam
 
   class << self
     def initialize(opts={})      
-      logger.info "<- Initializing YourTeam ->"
+      logger.info "Initializing YourTeam"
       @environment = opts.delete(:environment)            
-      logger.info logger.inspect
-      logger.info "--- environment: #{@environment}"
+      logger.info "environment: #{@environment}"
       establish_database_connection
     end
     public :initialize
   
     def logger
       return @logger if @logger
-      log = Logging.logger(STDOUT, :yourteam_logger)
-      @layout = Logging.layouts.pattern({})
-      @layout.date_pattern = '%c'
-      puts @layout.inspect
-      log.level = :info
+      Logging.appenders.stdout(:level => :debug,:layout => Logging.layouts.pattern(:pattern => '[%c:%5l] %p %d --- %m\n'))
+      log = Logging.logger['YourTeam']
+      log.add_appenders 'stdout'
       @logger = log
     end
     
@@ -35,7 +35,7 @@ module YourTeam
     end
   
     def establish_database_connection
-      logger.info "--- connecting to database"
+      logger.warn "connecting to database"
       DataMapper.setup(:default, "sqlite3::memory:")
       DataMapper::Logger.new(STDOUT, @environment == "test" ? :debug : :info) # :off, :fatal, :error, :warn, :info, :debug
       DataMapper.auto_migrate! if @environment == "test"

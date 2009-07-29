@@ -7,7 +7,7 @@ Spec::Runner.configure do |config|
   Members = {}
   Users = {}
   def sample_data
-    YourTeam.logger.info "--- loading sample data"
+    YourTeam.logger.info "loading sample data"
     Users[:tyler] = YourTeam::User.create(:username=>"ubermajestix")
     Users[:jeff] = YourTeam::User.create(:username=>"jlarrimore")
     Members[:daper_dan] = YourTeam::Member.create(:image_url=>"http://twitpic.com/bambam.jpg", :name => "Daper Dan")
