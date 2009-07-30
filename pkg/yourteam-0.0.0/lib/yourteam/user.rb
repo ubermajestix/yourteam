@@ -6,6 +6,8 @@ class YourTeam::User
   property :profile_image_url, String
   property :twitter_id, String
   property :username, String #twitter @username
+  property :created_at, DateTime, :default => Proc.new {Time.now}
+  
   has 1, :team, :model => "YourTeam::Team"
   has n, :members, :through => :team
   
