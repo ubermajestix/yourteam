@@ -16,7 +16,8 @@ module YourTeam
   class << self
     def initialize(opts={})      
       logger.info "Initializing YourTeam"
-      @environment = opts.delete(:environment)            
+      @environment = opts[:environment] ? opts.delete(:environment) : ENV['YT_ENV']    
+      raise "must provide an environment!" unless ["test", "development", "production"].include?(@environment)    
       logger.info "environment: #{@environment}"
       establish_database_connection
     end

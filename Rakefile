@@ -28,6 +28,4 @@ PROJ.rubyforge.name = 'yourteam'
 
 PROJ.spec.opts << '--color'
 
-rakefiles = Dir.glob(File.join("**", "tasks", "*.rake"))
-import(*rakefiles)
 # EOF

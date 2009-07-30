@@ -1,9 +1,38 @@
 namespace :db do  
+  
   task :init do
-    YourTeam.initialize
+    ENV['YT_ENV'] ||= "developement"
+    puts "init"
+    YourTeam.initialize(:environment=>ENV['YT_ENV'])
   end  
-  desc "runs the Datamapper.auto_migrate!"
+  
+  desc "desctructively migrate the database to match models"
   task :migrate => :init do
+    destructive_countdown
     DataMapper.auto_migrate!
   end
+  
+  desc "non-desctructively migrate the database to match models"
+  task :upgrade => :init do
+    puts "upgrade"
+    DataMapper.auto_upgrade!
+  end
+  
+  desc "tear down database, build up database"
+  task :remigrate => :init do
+    destructive_countdown
+    DataMapper.auto_migrate_down!
+    DataMapper.auto_migrate_up!
+  end
+  
+  def destructive_countdown
+    raise "don't even think about migrating the db in production" if ENV['YT_ENV'] == "production"    
+    puts "\nTHIS WILL DESTROY DATA CTL+C NOW"
+    ticks = 6
+    5.times do
+       puts "#{ticks-=1}..."
+       sleep 1
+    end
+  end
+  
 end
