@@ -35,8 +35,9 @@ module YourTeam
     end
   
     def establish_database_connection
-      logger.warn "connecting to database"
-      DataMapper.setup(:default, "sqlite3::memory:")
+      db = @environment == "test" ? "sqlite3::memory:" : "sqlite3:///#{Dir.pwd}/db/#{@environment}.sqlite3"
+      logger.info "connecting to database #{db}"
+      DataMapper.setup(:default, db)
       DataMapper::Logger.new(STDOUT, @environment == "test" ? :debug : :info) # :off, :fatal, :error, :warn, :info, :debug
       DataMapper.auto_migrate! if @environment == "test"
     end

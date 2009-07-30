@@ -18,6 +18,7 @@ require 'yourteam'
 
 task :default => 'spec:run'
 
+
 PROJ.name = 'yourteam'
 PROJ.authors = 'Tyler Montgomery'
 PROJ.email = 'tyler@is.stupidawesome.com'
@@ -27,4 +28,6 @@ PROJ.rubyforge.name = 'yourteam'
 
 PROJ.spec.opts << '--color'
 
+rakefiles = Dir.glob(File.join("**", "tasks", "*.rake"))
+import(*rakefiles)
 # EOF
