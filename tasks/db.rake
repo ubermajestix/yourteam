@@ -1,7 +1,7 @@
 namespace :db do  
   
   task :init do
-    env = ENV['YT_ENV'] || "development"
+    env = ENV['RACK_ENV'] || "development"
     YourTeam.initialize(:environment=>env)
   end  
   

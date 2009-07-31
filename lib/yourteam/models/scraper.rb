@@ -5,6 +5,17 @@ class YourTeam::Scraper
   end
   attr_accessor :tweets
   
+  def curl_test
+    content = Curl::Easy.perform("http://www.google.com") do |curl|
+       curl.timeout = 12
+     end
+     YourTeam.logger.info content.body_str
+     content = Curl::Easy.perform("http://www.bikerouter.com") do |curl|
+        curl.timeout = 12
+      end
+    YourTeam.logger.info content.body_str
+  end
+  
   def get_tweets
     since_id = YourTeam::Scraper::Status.first(:order=>[:created_at.desc])     
     url = "http://search.twitter.com/search.json?q=%23yourteam"
@@ -13,7 +24,7 @@ class YourTeam::Scraper
     content = Curl::Easy.perform(url) do |curl|
       curl.timeout = 12
     end
-    YourTeam.logger.info "Response from twitter: #{content.inspect}"
+    YourTeam.logger.info "Response from twitter: #{content.body_str}"
     @tweets = JSON.parse(content.body_str)
     YourTeam.logger.info "found #{@tweets['results'].length} tweets. max_id is #{@tweets['max_id']}"
     YourTeam::Scraper::Status.create(:since_id=>@tweets["max_id"])     
