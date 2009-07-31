@@ -1,0 +1,2 @@
+logging --version 1.1.4 
+dm-core --version 0.10.0 --source http://gems.datamapper.org
