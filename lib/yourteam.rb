@@ -2,7 +2,7 @@ require 'rubygems'
 # sudo gem install dm-core do_sqlite3 --source http://gems.datamapper.org -v 0.10.0
 gem 'dm-core', '=0.10.0'
 require 'dm-core'
-gem 'logging', "=1.1.4"
+#gem 'logging', "=1.1.4"
 require 'logging'
 require 'json/ext'
 require 'curb'
