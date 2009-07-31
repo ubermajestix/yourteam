@@ -1,19 +1,22 @@
 require 'rubygems'
 # sudo gem install dm-core do_sqlite3 --source http://gems.datamapper.org -v 0.10.0
-require 'dm-core'
+require 'dm-core', '~>0.10'
 require 'logging'
 require 'json/ext'
 require 'curb'
+require 'sinatra/base'
 
 
 module YourTeam
   # :stopdoc:
-  VERSION = '0.0.3'
+  VERSION = '0.0.4'
   LIBPATH = ::File.expand_path(::File.dirname(__FILE__)) + ::File::SEPARATOR
   PATH = ::File.dirname(LIBPATH) + ::File::SEPARATOR
   # :startdoc:
 
   class << self
+
+    
     def initialize(opts={})      
       logger.info "Initializing YourTeam"
       @environment = opts[:environment] ? opts.delete(:environment) : ENV['YT_ENV']    
@@ -22,6 +25,15 @@ module YourTeam
       establish_database_connection
     end
     public :initialize
+  
+    def app
+      puts "apping away"
+      @app ||= Rack::Builder.new do
+        use Rack::Session::Cookie, :key => 'rack.session', :path => '/',
+         :expire_after => 2592000, :secret => ::Digest::SHA1.hexdigest(Time.now.to_s)
+        run App
+      end
+    end
   
     def logger
       return @logger if @logger

@@ -1,0 +1,10 @@
+<h1>Users</h1>
+<% @users.each do |user| %>
+  <p><%= user.username %></p>
+  <div style="border: 1px solid">
+    <p>Team Members</p>
+    <% user.members.each do |member| %>
+      <%= member.text %> <br/>
+    <% end %>
+  </div>
+<% end %>
