@@ -35,7 +35,7 @@ Specify an environment to use:
 
   argument "environment" do
     description "The environment in which to initialize YourTeam"
-    default ENV["YT_ENV"] || "test"
+    default ENV["RACK_ENV"] || "test"
     attribute
   end
 

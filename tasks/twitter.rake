@@ -1,11 +1,11 @@
-namespace :scrape do
+namespace :twitter do
   task :init do
     ENV['RACK_ENV'] ||= "development"
     YourTeam.initialize(:environment=>ENV['RACK_ENV'])
   end
   
   desc "scrape the twitters"
-  task :tweets => :init do
+  task :scrape => :init do
     begin
       scraper = YourTeam::Scraper.new
       scraper.get_tweets
@@ -15,8 +15,8 @@ namespace :scrape do
     end
   end
   
-  task :curl_test => :init do
+  task :rate_limit => :init do
     scraper = YourTeam::Scraper.new
-    scraper.curl_test
+    scraper.rate_limit
   end
 end

@@ -5,15 +5,13 @@ class YourTeam::Scraper
   end
   attr_accessor :tweets
   
-  def curl_test
-    content = Curl::Easy.perform("http://www.google.com") do |curl|
+  def rate_limit
+    content = Curl::Easy.perform("http://twitter.com/account/rate_limit_status.json") do |curl|
        curl.timeout = 12
      end
-     YourTeam.logger.info content.body_str
-     content = Curl::Easy.perform("http://www.bikerouter.com") do |curl|
-        curl.timeout = 12
-      end
-    YourTeam.logger.info content.body_str
+    response = JSON.parse(content.body_str)
+
+    YourTeam.logger.info response.inspect
   end
   
   def get_tweets
@@ -24,7 +22,7 @@ class YourTeam::Scraper
     content = Curl::Easy.perform(url) do |curl|
       curl.timeout = 12
     end
-    YourTeam.logger.info "Response from twitter: #{content.body_str}"
+    YourTeam.logger.info "Response from twitter: #{headers(content.header_str)["Status"]}"
     @tweets = JSON.parse(content.body_str)
     YourTeam.logger.info "found #{@tweets['results'].length} tweets. max_id is #{@tweets['max_id']}"
     YourTeam::Scraper::Status.create(:since_id=>@tweets["max_id"])     
@@ -74,6 +72,22 @@ class YourTeam::Scraper
     property :id, Serial
     property :since_id, String
     property :created_at, DateTime, :default => Proc.new {Time.now}
+  end
+  
+  private
+  
+  def headers(header_str)
+    header_hash = {}
+    headers = header_str.split("\r\n")
+    headers.each do |header| 
+      if headers.first == header  
+        header_hash["Status"] = header 
+      else
+        entry = header.split(": "); 
+        entry.length == 2 ? header_hash[entry.first] = entry.last : header_hash[entry.first] = nil
+      end
+    end
+    return header_hash
   end
   
 end

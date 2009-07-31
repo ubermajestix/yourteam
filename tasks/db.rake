@@ -25,12 +25,14 @@ namespace :db do
   end
   
   def destructive_countdown
-    raise "don't even think about migrating the db in production" if ENV['YT_ENV'] == "production"    
-    puts "\nTHIS WILL DESTROY DATA CTL+C NOW"
-    ticks = 6
-    5.times do
-       puts "#{ticks-=1}..."
-       sleep 1
+    unless ARGV[1] == "FORCE=true"
+      raise "don't even think about migrating the db in production" if ENV['RACK_ENV'] == "production"    
+      puts "\nTHIS WILL DESTROY DATA CTL+C NOW"
+      ticks = 6
+      5.times do
+         puts "#{ticks-=1}..."
+         sleep 1
+      end
     end
   end
   
