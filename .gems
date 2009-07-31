@@ -1,2 +1,3 @@
 logging --version 1.1.4 
+addressable --version 2.0.2
 dm-core --version 0.10.0 --source http://gems.datamapper.org
