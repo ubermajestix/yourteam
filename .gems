@@ -1,3 +1,4 @@
 logging --version 1.1.4 
 addressable --version "~>2.0"
+curb --version 0.3.5
 dm-core --version 0.10.0 --source http://gems.datamapper.org
