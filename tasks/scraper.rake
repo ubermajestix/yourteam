@@ -1,7 +1,7 @@
 namespace :scrape do
   task :init do
-    ENV['YT_ENV'] ||= "development"
-    YourTeam.initialize(:environment=>ENV['YT_ENV'])
+    ENV['RACK_ENV'] ||= "development"
+    YourTeam.initialize(:environment=>ENV['RACK_ENV'])
   end
   
   desc "scrape the twitters"

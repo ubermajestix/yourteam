@@ -13,6 +13,7 @@ class YourTeam::Scraper
     content = Curl::Easy.perform(url) do |curl|
       curl.timeout = 12
     end
+    YourTeam.logger.info "Response from twitter: #{content.inspect}"
     @tweets = JSON.parse(content.body_str)
     YourTeam.logger.info "found #{@tweets['results'].length} tweets. max_id is #{@tweets['max_id']}"
     YourTeam::Scraper::Status.create(:since_id=>@tweets["max_id"])     
