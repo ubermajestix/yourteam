@@ -1,7 +1,5 @@
 require 'rubygems'
-
-ensure_in_path 'lib'
-require 'yourteam'
+require 'lib/yourteam'
 
 
 class YourTeamSite < YourTeam::App
