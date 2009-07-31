@@ -1,9 +1,8 @@
 namespace :db do  
   
   task :init do
-    ENV['YT_ENV'] ||= "developement"
-    puts "init"
-    YourTeam.initialize(:environment=>ENV['YT_ENV'])
+    env = ENV['YT_ENV'] || "development"
+    YourTeam.initialize(:environment=>env)
   end  
   
   desc "desctructively migrate the database to match models"

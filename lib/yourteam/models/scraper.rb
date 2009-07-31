@@ -7,6 +7,7 @@ class YourTeam::Scraper
   
   def get_tweets
     since_id = YourTeam::Scraper::Status.first(:order=>[:created_at.desc])     
+    YourTeam.logger.info "Fetching tweets (since_id: #{since_id})"
     url = "http://search.twitter.com/search.json?q=%23yourteam"
     url << "&since_id=#{since_id}" if since_id
     content = Curl::Easy.perform(url) do |curl|
@@ -20,8 +21,11 @@ class YourTeam::Scraper
   def process_tweets
     raise "don't got no tweets to process dog." if self.tweets.empty?
     # so... we shouldn't even do this if there isn't a to_user
+    num_tweets = self.tweets['results'].length
+    YourTeam.logger.info "Processing #{num_tweets} tweets"
     results = self.tweets["results"]
     results.each do |tweet|
+      YourTeam.logger.info "tweet #{results.index(tweet)+1}/#{num_tweets}"
       unless tweet["to_user_id"].nil?
         team_captain = find_or_create_user(tweet["to_user"])
         tagged_by    = find_or_create_user(tweet["from_user"])

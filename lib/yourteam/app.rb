@@ -2,9 +2,9 @@ module YourTeam
   class App < Sinatra::Base
     set :views, File.join(File.dirname(__FILE__), '/views')
   
-    configure do
-      YourTeam.initialize(:environment=>ENV['RACK_ENV'] || "development")
-    end
+#    configure do
+#      YourTeam.initialize(:environment=>ENV['RACK_ENV'] || "development")
+#    end
 
     get '/' do
        @users = YourTeam::User.all
