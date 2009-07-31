@@ -8,7 +8,7 @@ class YourTeam::Scraper
   def get_tweets
     since_id = YourTeam::Scraper::Status.first(:order=>[:created_at.desc])     
     url = "http://search.twitter.com/search.json?q=%23yourteam"
-    url << "&since_id=#{since_id}" if since_id
+    url << "&since_id=#{since_id.since_id}" if since_id
     YourTeam.logger.info "Fetching tweets: #{url}"
     content = Curl::Easy.perform(url) do |curl|
       curl.timeout = 12
